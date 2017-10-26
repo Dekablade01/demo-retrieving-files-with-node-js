@@ -47,7 +47,6 @@ var upload = multer({ storage: storage }).fields([{name: "originsFile"}, {name: 
 
 app.post("/uploads", upload, (req, res) => {
 
-    console.log();
     if (!req.body) {
         res.json({
             status: false,
@@ -89,4 +88,3 @@ app.listen(port, () => {
    console.log("application is listening on:", port);
 });
 
-module.exports = app;
