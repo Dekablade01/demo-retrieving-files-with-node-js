@@ -5,14 +5,15 @@
 var express = require("express");
 var app = express();
 
+app.set('views', './views');
+app.set('view engine', 'jade');
+
 var port = process.env.PORT || 5000;
 
 app.get("/", (req, res) => {
-    var responseObject = {
-        status: true,
-        data: { text: "hello" }
-    }
-    res.json(responseObject);
+    res.render("home", {
+        title: "welcome"
+    });
 });
 
 app.listen(port, () => {
