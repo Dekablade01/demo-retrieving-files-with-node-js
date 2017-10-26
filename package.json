@@ -1,5 +1,5 @@
 {
-  "name": "demo-nodejs-file-uploading-form",
+  "name": "demo-retrieving-files-with-node-js",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
@@ -9,6 +9,7 @@
   "author": "Issarapong Poesua",
   "license": "ISC",
   "dependencies": {
+    "bootstrap": "^3.3.7",
     "express": "^4.16.2"
   }
 }
