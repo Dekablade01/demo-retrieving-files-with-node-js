@@ -11,7 +11,7 @@ app.set('view engine', 'jade');
 var port = process.env.PORT || 5000;
 
 app.get("/", (req, res) => {
-    res.render("home", {
+    res.render("index", {
         title: "welcome"
     });
 });
