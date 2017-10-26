@@ -1,0 +1,14 @@
+{
+  "name": "demo-nodejs-file-uploading-form",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Issarapong Poesua",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.2"
+  }
+}
