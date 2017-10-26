@@ -6,7 +6,6 @@ var express = require("express");
 var fs = require("fs");
 var path = require('path');
 var multer = require("multer");
-var bodyParser = require("body-parser");
 var uploadPath = "./uploads/"
 var app = express();
 
@@ -21,31 +20,33 @@ app.get("/", (req, res) => {
 });
 
 
-var storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, uploadPath)
-    },
-    filename: (req, file, cb) => {
-        cb(null, file.fieldname + '-' + Date.now() + '.jpg')
-    }
-});
-
-var upload = multer({ storage: storage }).fields
+var upload = multer({ dest: uploadPath }).fields([{name: "originsFile"}, {name: "destinationsFile"}]);
 
 
-app.post('/uploads', (req, res) => {
+app.post("/uploads", upload, (req, res) => {
     upload(req, res, (err) => {
-        if (!fs.existsSync(uploadPath)) {
-            fs.mkdirSync(uploadPath)
+        if (!req.files) {
+            res.json({
+                status: false,
+                message: "No Files"
+            });
+            return;
         }
-
         if (err) {
-            return res.json(err)
+            res.json({
+                status: false,
+                message: "Failure"
+            });
+            return;
         }
+        res.json({
+            success: true,
+            message: 'Image uploaded!'
+        });
 
-        res.json({ success: true, message: 'Image uploaded!' });
 
-    });
+        // Everything went fine
+    })
 });
 
 
