@@ -17,6 +17,8 @@ var app = express();
 
 var port = process.env.PORT || 5000;
 
+var isPerformingJob = false;
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
@@ -38,15 +40,21 @@ let storage = multer.diskStorage({
         let extArray = file.mimetype.split("/");
         let extension = extArray[extArray.length - 1];
         let fileName = file.fieldname + '-' + Date.now()+ '.' +extension;
-        fileNames.push(file.originalname);
-        cb(null, file.originalname);
+        fileNames.push(fileName);
+        cb(null, fileName);
     }
 })
 
 var upload = multer({ storage: storage }).fields([{name: "originsFile"}, {name: "destinationsFile"}]);
 
 app.post("/uploads", upload, (req, res) => {
-
+    if (isPerformingJob) {
+        res.json({
+            status: false,
+            message: "Performing AnotherJob"
+        })
+        return;
+    }
     if (!req.body) {
         res.json({
             status: false,
@@ -69,13 +77,15 @@ app.post("/uploads", upload, (req, res) => {
             });
             return;
         }
-
+        isPerformingJob = true;
         distanceCalculator(fileNames[0], fileNames[1], (isLastRow) => {
             console.log(isLastRow);
 
             if (isLastRow) {
                 res.download(__dirname + "/distance.csv");
+                isPerformingJob = false;
             }
+
         });
 
 

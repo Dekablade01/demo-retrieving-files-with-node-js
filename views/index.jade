@@ -27,14 +27,16 @@ html
                         input.form-control(
                         required=true,
                         name='originsFile',
-                        type='file')
+                        type='file',
+                        accept=".csv")
                 div.form-group
                     label.col-sm-4 Destinations File
                     div.col-sm-8
                         input.form-control(
                         required=true,
                         name='destinationsFile',
-                        type='file')
+                        type='file',
+                        accept=".csv")
                 div.form-group
                     div.col-sm-offset-4.col-sm-8
                         button.login.btn.btn-primary(type='submit') Perform Upload
